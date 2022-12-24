@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pools:
   - tag: Cube
-    prefab: {fileID: 0}
-    size: 0
+    prefab: {fileID: 5433153831042079907, guid: abbbac4877069e247bbb3cdb3d712d50, type: 3}
+    size: 1000

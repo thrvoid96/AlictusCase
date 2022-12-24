@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : Singleton<PlayerController>
 {
     private Rigidbody rb;
+    [SerializeField] private Rigidbody playerCollider;
     [SerializeField] private Joystick joystick;
     
     public float moveSpeed = 7;
@@ -25,7 +26,7 @@ public class PlayerController : Singleton<PlayerController>
     
     void FixedUpdate()
     {
-        if (LevelManager.gamestate == GameState.Gameplay && rb.constraints == RigidbodyConstraints.None)
+        if (LevelManager.gamestate == GameState.Gameplay)
         {
             Vector3 inputDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
             float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
@@ -37,6 +38,9 @@ public class PlayerController : Singleton<PlayerController>
             velocity = transform.forward * moveSpeed * smoothInputMagnitude;
             
             rb.MovePosition(rb.position + velocity * Time.deltaTime);
+
+            playerCollider.MovePosition(rb.position);
+            playerCollider.MoveRotation(rb.rotation);
         }
     }
 }
