@@ -5,20 +5,15 @@ using System;
 using System.IO;
 using Random = UnityEngine.Random;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
-    public static LevelManager instance;
-    public static GameState gamestate;
+    public static GameState gamestate = GameState.BeforeStart;
+    
     [NonSerialized] public LevelAssetCreate levelAsset;
     [SerializeField] private GameData gameData;
-
+    public GameData getData => gameData;
+    
     private void Awake()
-    {
-        gamestate = GameState.BeforeStart;
-        instance = this;
-    }
-
-    private void Start()
     {
         SetValues();
     }

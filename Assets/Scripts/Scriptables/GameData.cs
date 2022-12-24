@@ -6,5 +6,6 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "GameData", menuName = "CustomSO/GameData", order = 1)]
 public class GameData : JsonSerialisableScriptableObject<GameData>
 {
-    public int Level, RandomLevel;
+    public int Level = 1;
+    public int RandomLevel;
 }
