@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,43 +6,53 @@ using UnityEngine.Events;
 
 public class EventManager : Singleton<EventManager>
 {
-    // [ContextMenu(nameof(AddNewEvent))]
-    // void AddNewEvent(string eventName)
-    // {
-    //     
-    // }
-    // private Dictionary<string, UnityEvent> eventsDictionary = new Dictionary<string, UnityEvent>();
-    //
-    // private void Awake()
-    // {
-    //     foreach (string eventName in events)
-    //     {
-    //         eventsDictionary.Add(eventName,new UnityEvent());
-    //     }
-    // }
-    //
-    // public void AddNewEvent(string eventName)
-    // {
-    //     
-    // }
+    public List<CustomEvent> availableEvents;
+    private Dictionary<string, UnityEvent> eventsDictionary = new Dictionary<string, UnityEvent>();
 
-    public void RegisterToEvent(string eventName)
+    [Serializable]
+    public class CustomEvent
     {
-        
+        public string eventName;
+        public UnityEvent unityEvent;
     }
 
-    public void RemoveFromEvent(string eventName)
+    private void Start()
     {
-        
+        foreach (CustomEvent custEvent in availableEvents)
+        {
+            eventsDictionary.Add(custEvent.eventName,custEvent.unityEvent);
+        }
+    }
+
+    public void RegisterToEvent(string eventName, UnityAction callBack)
+    {
+        if (eventsDictionary.ContainsKey(eventName))
+        {
+            eventsDictionary[eventName].AddListener(callBack);
+        }
+    }
+
+    public void RemoveFromEvent(string eventName, UnityAction callBack)
+    {
+        if (eventsDictionary.ContainsKey(eventName))
+        {
+            eventsDictionary[eventName].RemoveListener(callBack);
+        }
     }
 
     public void RemoveAllFromEvent(string eventName)
     {
-        
+        if (eventsDictionary.ContainsKey(eventName))
+        {
+            eventsDictionary[eventName].RemoveAllListeners();
+        }
     }
 
     public void TriggerEvent(string eventName)
     {
-        
+        if (eventsDictionary.ContainsKey(eventName))
+        {
+            eventsDictionary[eventName].RemoveAllListeners();
+        }
     }
 }
