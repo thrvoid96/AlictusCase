@@ -8,6 +8,7 @@ public class PlayArea : Singleton<PlayArea>
     public void GameStart()
     {
         LevelManager.gamestate = GameState.Gameplay;
+        CollectableSpawner.Instance.StartSpawn();
         gameObject.SetActive(false);
     }
 }

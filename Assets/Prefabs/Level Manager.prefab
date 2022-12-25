@@ -44,3 +44,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 911fc98210515f144a7dc9e918a26ab6, type: 2}
+  goldenLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  aiLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 256

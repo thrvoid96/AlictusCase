@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : Singleton<PlayerController>
 {
     private Rigidbody rb;
-    [SerializeField] private Rigidbody playerCollider;
+    [SerializeField] private Rigidbody holder,trigger;
     [SerializeField] private Joystick joystick;
     
     public float moveSpeed = 7;
@@ -39,8 +39,10 @@ public class PlayerController : Singleton<PlayerController>
             
             rb.MovePosition(rb.position + velocity * Time.deltaTime);
 
-            playerCollider.MovePosition(rb.position);
-            playerCollider.MoveRotation(rb.rotation);
+            holder.MovePosition(rb.position);
+            holder.MoveRotation(rb.rotation);
+            trigger.MovePosition(rb.position);
+            trigger.MoveRotation(rb.rotation);
         }
     }
 }

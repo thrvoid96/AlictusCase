@@ -12,15 +12,15 @@ TagManager:
   - Water
   - UI
   - Player
-  - CubeHolder
-  - Cube
+  - PlayerCollectable
+  - Collectable
   - Wall
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Collector
+  - GoldenCollectable
+  - AICollectable
+  - AICollectableHolder
+  - PlayerCollectableHolder
   - 
   - 
   - 

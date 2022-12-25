@@ -11,8 +11,14 @@ public class LevelManager : Singleton<LevelManager>
     
     [NonSerialized] public LevelAssetCreate levelAsset;
     [SerializeField] private GameData gameData;
+    private List<Material> collectableMats;
+    private Material goldenMat;
     public GameData getData => gameData;
-    
+    public List<Material> getcollectableMats => collectableMats;
+    public Material getGoldenMat => goldenMat;
+
+    public LayerMask goldenLayer, playerLayer, aiLayer, defaultLayer;
+
     private void Awake()
     {
         SetValues();
@@ -22,6 +28,8 @@ public class LevelManager : Singleton<LevelManager>
     void SetValues()
     {
         levelAsset = Resources.Load<LevelAssetCreate>("Scriptables/LevelAsset");
+        collectableMats = levelAsset.collectableMats;
+        goldenMat = levelAsset.goldenMat;
         CreateLevel();
     }
 

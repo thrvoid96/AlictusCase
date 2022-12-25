@@ -8,4 +8,6 @@ using System;
 public class LevelAssetCreate : ScriptableObject
 {
     public List<GameObject> levelPrefabs;
+    public List<Material> collectableMats;
+    public Material goldenMat;
 }
