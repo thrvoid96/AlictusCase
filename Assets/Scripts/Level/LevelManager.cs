@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using DG.Tweening;
+using MVC.Controllers;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class LevelManager : Singleton<LevelManager>
@@ -11,13 +14,14 @@ public class LevelManager : Singleton<LevelManager>
     
     [NonSerialized] public LevelAssetCreate levelAsset;
     [SerializeField] private GameData gameData;
+    public List<Material> getcollectableMats => collectableMats;
+    public Material getGoldenMat => goldenMat;
+    public LayerMask goldenLayer, playerLayer, aiLayer, defaultLayer;
+
     private List<Material> collectableMats;
     private Material goldenMat;
     public GameData getData => gameData;
-    public List<Material> getcollectableMats => collectableMats;
-    public Material getGoldenMat => goldenMat;
-
-    public LayerMask goldenLayer, playerLayer, aiLayer, defaultLayer;
+    
 
     private void Awake()
     {
@@ -30,9 +34,10 @@ public class LevelManager : Singleton<LevelManager>
         levelAsset = Resources.Load<LevelAssetCreate>("Scriptables/LevelAsset");
         collectableMats = levelAsset.collectableMats;
         goldenMat = levelAsset.goldenMat;
+
+        //LoadData();
         CreateLevel();
     }
-
 
     //-------------------------------------------------------------------//
     void CreateLevel()
@@ -46,6 +51,41 @@ public class LevelManager : Singleton<LevelManager>
             gameData.RandomLevel = Random.Range(0, levelAsset.levelPrefabs.Count);
             Instantiate(levelAsset.levelPrefabs[gameData.RandomLevel]);
         }
+    }
+    
+
+    public void LevelComplete()
+    {
+        DOTween.KillAll();
+        gamestate = GameState.Victory;
+        EventManager.Instance.levelWinEvent.Invoke();
+        RootController.Instance.SetupVictoryPanel(PlayerController.Instance.collectArea.collectedObjects.Count);
+        RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.VictoryPanel);
+    }
+
+    public void LevelFail()
+    {
+        DOTween.KillAll();
+        gamestate = GameState.Fail;
+        EventManager.Instance.LevelFailEvent.Invoke();
+        RootController.Instance.SetupFailPanel();
+        RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.FailPanel);
+    }
+
+    public void ChangeLevel(int levelToSet)
+    {
+        if (gameData.Level<levelAsset.levelPrefabs.Count)
+        {
+            gameData.Level = levelToSet;
+        }
+        
+        //SaveData();
+        DOVirtual.DelayedCall(0.1f, ReloadScene);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
     private void OnApplicationFocus(bool hasFocus)

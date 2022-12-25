@@ -12,6 +12,7 @@ public class CollectArea : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        PlayerController.Instance.collectArea = this;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,9 +25,11 @@ public class CollectArea : MonoBehaviour
                 collectable.SetMaterial(LevelManager.Instance.getGoldenMat);
                 collectable.ConnectSpringJointTo(rb);
                 collectable.isCollected = true;
+                collectable.transform.SetParent(transform);
                 collectedObjects.Add(collectable);
                 transform.localScale += (Vector3.one * scaleIncrease);
                 CollectableSpawner.Instance.CollectableCollected(collectable);
+                EventManager.Instance.playerCollectedCollectableEvent?.Invoke();
             }
         }
     }

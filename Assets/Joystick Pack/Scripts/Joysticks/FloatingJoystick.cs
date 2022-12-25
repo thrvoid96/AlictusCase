@@ -15,10 +15,6 @@ public class FloatingJoystick : Joystick
     {
         background.anchoredPosition = ScreenPointToAnchoredPosition(eventData.position);
         background.gameObject.SetActive(true);
-        if (LevelManager.gamestate == GameState.BeforeStart)
-        {
-            PlayArea.Instance.GameStart();
-        }
         base.OnPointerDown(eventData);
     }
 

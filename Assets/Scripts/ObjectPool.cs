@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Instantiate objects into a dictionary in the beginning of the game.
 
-public class ObjectPool : PersistentLazySingleton<ObjectPool>
+public class ObjectPool : Singleton<ObjectPool>
 {
     [System.Serializable]
     public class Pool

@@ -9,14 +9,24 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
     public float spawnRate;
     public int maxAmount;
 
-    public BoxCollider cubeSpawnArea;
+    private BoxCollider cubeSpawnArea;
     public List<Collectable> availableCollectables;
 
     private List<Material> collectableMats;
 
+    private void Awake()
+    {
+        cubeSpawnArea = GetComponent<BoxCollider>();
+    }
+
     private void Start()
     {
         collectableMats = LevelManager.Instance.getcollectableMats;
+    }
+    
+    private void OnEnable()
+    {
+        EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
     }
 
     public void StartSpawn()

@@ -7,21 +7,22 @@ public class PlayerController : Singleton<PlayerController>
 {
     private Rigidbody rb;
     [SerializeField] private Rigidbody holder,trigger;
-    [SerializeField] private Joystick joystick;
-    
+
     public float moveSpeed = 7;
     public float smoothMoveTime = 0.1f;
     public float turnSpeed = 8f;
     
-    float angle;
-    float smoothInputMagnitude;
-    float smoothMoveVelocity;
-    float inputMagnitude;
-    Vector3 velocity;
+    private float angle;
+    private float smoothInputMagnitude;
+    private float inputMagnitude;
+    private Vector3 velocity;
+    private Joystick joystick;
+    public CollectArea collectArea;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        joystick = Joystick.Instance;
     }
     
     void FixedUpdate()
@@ -44,5 +45,13 @@ public class PlayerController : Singleton<PlayerController>
             trigger.MovePosition(rb.position);
             trigger.MoveRotation(rb.rotation);
         }
+    }
+
+    public void SetupPlayerValues(LevelData levelData)
+    {
+        moveSpeed = levelData.moveSpeed;
+        smoothMoveTime = levelData.smoothMoveTime;
+        turnSpeed = levelData.turnSpeed;
+        transform.localScale = Vector3.one * levelData.playerScale;
     }
 }

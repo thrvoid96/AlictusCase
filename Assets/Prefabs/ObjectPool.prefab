@@ -47,3 +47,6 @@ MonoBehaviour:
   - tag: Cube
     prefab: {fileID: 5433153831042079907, guid: abbbac4877069e247bbb3cdb3d712d50, type: 3}
     size: 1000
+  - tag: LevelChooseButton
+    prefab: {fileID: 3217322144474345618, guid: 65f7637a16b3b84448d6cab3a7b08a3e, type: 3}
+    size: 1000
