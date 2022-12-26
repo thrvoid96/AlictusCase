@@ -87,7 +87,7 @@ public class PlayerController : Singleton<PlayerController>
             rb.useGravity = true;
             rb.drag = 1f;
             rb.angularDrag = 1f;
-            rb.AddExplosionForce(1000f,transform.position + new Vector3(Random.Range(-1f,1f), -1f, Random.Range(-1f,1f)),100f);
+            rb.AddExplosionForce(500f,transform.position + new Vector3(Random.Range(-1f,1f), -1f, Random.Range(-1f,1f)),10f);
             rb.AddTorque(new Vector3(Random.Range(500f,1000f),Random.Range(500f,1000f),Random.Range(500f,1000f)));
 
             for (int i = 0; i < collectableHolder.currentCollectables.Count; i++)

@@ -16,6 +16,17 @@ public class AIController : Singleton<AIController>
     public CollectableHolder collectableHolder;
 
     private Vector3 offset = new Vector3(0f,-0.3f,0f);
+    private Rigidbody rb;
+
+    private Tweener followTween;
+
+    private bool isDead;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     private void Start()
     {
         EventManager.Instance.levelStartEvent.AddListener(StartCollecting);
@@ -42,7 +53,7 @@ public class AIController : Singleton<AIController>
         DOVirtual.DelayedCall(0.1f, GoToRandomCollectable);
         
         float randomVal = 0f;
-        DOTween.To(() => randomVal, x => randomVal = x, 1f, 1f).OnStepComplete(() =>
+        followTween = DOTween.To(() => randomVal, x => randomVal = x, 1f, 1f).OnStepComplete(() =>
         {
             GoToRandomCollectable();
         }).SetLoops(-1, LoopType.Restart);
@@ -63,5 +74,55 @@ public class AIController : Singleton<AIController>
     public void UpdateScoreText()
     {
         scoreText.text = collectArea.collectedObjects.Count.ToString();
+    }
+    
+    public void KillAI()
+    {
+        if (!isDead)
+        {
+            isDead = true;
+            
+            followTween?.Kill();
+            navMeshAgent.enabled = false;
+            holder.gameObject.GetComponent<Collider>().enabled = false;
+            trigger.gameObject.GetComponent<Collider>().enabled = false;
+
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.AddExplosionForce(500f,transform.position + new Vector3(Random.Range(-1f,1f), -1f, Random.Range(-1f,1f)),10f);
+            rb.AddTorque(new Vector3(Random.Range(500f,1000f),Random.Range(500f,1000f),Random.Range(500f,1000f)));
+
+            for (int i = 0; i < collectableHolder.currentCollectables.Count; i++)
+            {
+                collectableHolder.currentCollectables[i].rb.AddExplosionForce(250f,transform.position + Vector3.down,10f);
+                collectableHolder.currentCollectables[i].SwitchLayers(LevelManager.Instance.defaultLayer);
+            }
+            
+            collectableHolder.currentCollectables.Clear();
+
+            DOVirtual.DelayedCall(2f, RespawnAI);
+        }
+    }
+
+    private void RespawnAI()
+    {
+        transform.position = transform.parent.position;
+        transform.rotation = Quaternion.Euler(new Vector3(0f,180f,0f));
+        holder.gameObject.GetComponent<Collider>().enabled = true;
+        trigger.gameObject.GetComponent<Collider>().enabled = true;
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        navMeshAgent.enabled = true;
+            
+        StartCollecting();
+        DOVirtual.DelayedCall(0.1f, ColliderDelay);
+    }
+
+    private void ColliderDelay()
+    {
+        isDead = false;
+        
+        holder.gameObject.GetComponent<Collider>().enabled = true;
+        trigger.gameObject.GetComponent<Collider>().enabled = true;
     }
 }

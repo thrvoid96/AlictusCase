@@ -13,7 +13,7 @@ public class Obstacle : MonoBehaviour
         }
         else if (other.gameObject.layer == LayerMask.NameToLayer("AICollectableHolder"))
         {
-            
+            AIController.Instance.KillAI();
         }
     }
 }
