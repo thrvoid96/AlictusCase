@@ -27,7 +27,7 @@ public class TopPanelView : BaseUIView
     private void StartTimer()
     {
         float remainingTime = startTime;
-        DOTween.To(() => remainingTime, x => remainingTime = x, 0f, startTime).OnUpdate(() =>
+        DOTween.To(() => remainingTime, x => remainingTime = x, 0f, startTime).SetEase(Ease.Linear).OnUpdate(() =>
         {
             fillImage.fillAmount = remainingTime / startTime;
             remainingTimeText.text = remainingTime.ToString("0.0");

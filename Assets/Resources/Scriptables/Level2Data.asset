@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4552223a16ca920479901a4d58b648c3, type: 3}
   m_Name: Level2Data
   m_EditorClassIdentifier: 
-  timeToBeatlevel: 5
+  timeToBeatlevel: 15
   moveSpeed: 7
   smoothMoveTime: 0.1
   turnSpeed: 8
   playerScale: 1
-  hasAI: 0
+  aiSpeed: 5
+  aiTurnSpeed: 360
+  aiAcceleration: 8
+  hasAI: 1

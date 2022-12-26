@@ -9,8 +9,14 @@ public class TimerLevel : BaseLevel
     {
         base.SetupLevel(levelData);
         this.levelData = levelData;
+
+        if (!levelData.hasAI)
+        {
+            AIController.Instance.transform.parent.gameObject.SetActive(false);
+        }
         
         RootController.Instance.SetupTopPanel(levelData);
         PlayerController.Instance.SetupPlayerValues(levelData);
+        AIController.Instance.SetupAgentStats(levelData);
     }
 }

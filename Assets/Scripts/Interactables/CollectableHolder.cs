@@ -6,12 +6,21 @@ using UnityEngine;
 public class CollectableHolder : MonoBehaviour
 {
     public List<Collectable> currentCollectables;
+    public bool isAI;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Collectable>(out var collectable))
         {
-            collectable.SwitchLayers(LevelManager.Instance.playerLayer);
+            if (isAI)
+            {
+                collectable.SwitchLayers(LevelManager.Instance.aiLayer);
+            }
+            else
+            {
+                collectable.SwitchLayers(LevelManager.Instance.playerLayer);
+            }
+            
             currentCollectables.Add(collectable);
         }
     }
