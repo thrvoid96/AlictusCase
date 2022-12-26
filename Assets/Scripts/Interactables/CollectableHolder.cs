@@ -36,4 +36,9 @@ public class CollectableHolder : MonoBehaviour
             currentCollectables.Remove(collectable);
         }
     }
+
+    private void UpdateUI()
+    {
+        
+    }
 }

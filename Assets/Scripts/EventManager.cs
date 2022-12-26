@@ -6,6 +6,6 @@ using UnityEngine.Events;
 
 public class EventManager : Singleton<EventManager>
 {
-    public UnityEvent levelStartEvent, levelWinEvent, LevelFailEvent, playerCollectedCollectableEvent;
+    public UnityEvent levelStartEvent, levelWinEvent, LevelFailEvent;
     
 }

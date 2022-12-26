@@ -34,11 +34,11 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
         DOVirtual.DelayedCall(spawnRate, SpawnCollectable).SetLoops(-1,LoopType.Restart);
     }
     
-    private Vector3 RandomPointInBounds(Bounds bounds) {
+    public Vector3 RandomPointInBounds() {
         return new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
-            Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z, bounds.max.z)
+            Random.Range(cubeSpawnArea.bounds.min.x, cubeSpawnArea.bounds.max.x),
+            Random.Range(cubeSpawnArea.bounds.min.y, cubeSpawnArea.bounds.max.y),
+            Random.Range(cubeSpawnArea.bounds.min.z, cubeSpawnArea.bounds.max.z)
         );
     }
 
@@ -49,7 +49,7 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
             return;
         }
         
-        var spawnedCollectable = ObjectPool.Instance.SpawnFromPool("Cube",RandomPointInBounds(cubeSpawnArea.bounds), Random.rotation, transform).GetComponent<Collectable>();
+        var spawnedCollectable = ObjectPool.Instance.SpawnFromPool("Cube",RandomPointInBounds(), Random.rotation, transform).GetComponent<Collectable>();
         spawnedCollectable.SetMaterial(collectableMats[Random.Range(0,collectableMats.Count)]);
         availableCollectables.Add(spawnedCollectable);
     }

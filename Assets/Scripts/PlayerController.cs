@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
     private Rigidbody rb;
     [SerializeField] private Rigidbody holder,trigger;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    
+    public CollectArea collectArea;
+    public CollectableHolder collectableHolder;
 
     public float moveSpeed = 7;
     public float smoothMoveTime = 0.1f;
@@ -15,9 +20,9 @@ public class PlayerController : Singleton<PlayerController>
     private float angle;
     private float smoothInputMagnitude;
     private float inputMagnitude;
+    private int currentScore;
     private Vector3 velocity;
     private Joystick joystick;
-    public CollectArea collectArea;
 
     private void Awake()
     {
@@ -53,5 +58,10 @@ public class PlayerController : Singleton<PlayerController>
         smoothMoveTime = levelData.smoothMoveTime;
         turnSpeed = levelData.turnSpeed;
         transform.localScale = Vector3.one * levelData.playerScale;
+    }
+
+    public void UpdateScoreText()
+    {
+        scoreText.text = collectArea.collectedObjects.Count.ToString();
     }
 }
