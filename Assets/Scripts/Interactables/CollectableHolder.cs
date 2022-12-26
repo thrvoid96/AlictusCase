@@ -37,7 +37,7 @@ public class CollectableHolder : MonoBehaviour
         }
     }
 
-    private void UpdateUI()
+    public void RemoveCollectableFromList()
     {
         
     }
