@@ -15,7 +15,7 @@ public class VictoryPanelView : BaseUIView
     {
         if (!levelData.hasAI)
         {
-            aiScoreText.enabled = false;
+            aiScoreText.gameObject.SetActive(false);
         }
         
         EventManager.Instance.levelFailEvent.AddListener(ShowScores);
@@ -24,8 +24,8 @@ public class VictoryPanelView : BaseUIView
 
     private void ShowScores()
     {
-        playerScoreText.text = "Your score: " + PlayerController.Instance.getScore;
-        aiScoreText.text = "AI score: " + AIController.Instance.getScore;
+        playerScoreText.text = "Your score: " + LevelManager.Instance.playerActor.getScore;
+        aiScoreText.text = "AI score: " + LevelManager.Instance.aiActor.getScore;
     }
     
     public void ChooseLevelButtonClicked()

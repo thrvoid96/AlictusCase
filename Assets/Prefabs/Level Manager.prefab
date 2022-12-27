@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 135aa5574d26be244a9593b833de45ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectableColors: []
   gameData: {fileID: 11400000, guid: 911fc98210515f144a7dc9e918a26ab6, type: 2}
   goldenLayer:
     serializedVersion: 2
@@ -56,3 +57,5 @@ MonoBehaviour:
   defaultLayer:
     serializedVersion: 2
     m_Bits: 256
+  playerActor: {fileID: 0}
+  aiActor: {fileID: 0}

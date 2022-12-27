@@ -7,31 +7,39 @@ using UnityEngine.AI;
 
 public class Obstacle : MonoBehaviour
 {
+    [SerializeField] private bool respawnOnDeath;
+    
+    private MeshRenderer meshRenderer;
+    private Collider collider;
+    private NavMeshObstacle nmObstacle;
+
+    private void Awake()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+        collider = GetComponent<Collider>();
+        nmObstacle = GetComponent<NavMeshObstacle>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerCollectableHolder"))
+        if (other.transform.parent.GetChild(0).TryGetComponent<Actor>(out var actor))
         {
-            PlayerController.Instance.KillPlayer();
-            GetComponent<MeshRenderer>().enabled = false;
-            GetComponent<SphereCollider>().enabled = false;
-            GetComponent<NavMeshObstacle>().enabled = false;
-            DOVirtual.DelayedCall(2f, ResetObject);
-        }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("AICollectableHolder"))
-        {
-            AIController.Instance.KillAI();
-            GetComponent<MeshRenderer>().enabled = false;
-            GetComponent<SphereCollider>().enabled = false;
-            GetComponent<NavMeshObstacle>().enabled = false;
-            DOVirtual.DelayedCall(2f, ResetObject);
+            actor.KillActor();
+            meshRenderer.enabled = false;
+            collider.enabled = false;
+            nmObstacle.enabled = false;
+            if (respawnOnDeath)
+            {
+                DOVirtual.DelayedCall(2f, RespawnObject);
+            }
+            
         }
     }
 
-
-    private void ResetObject()
+    private void RespawnObject()
     {
-        GetComponent<MeshRenderer>().enabled = true;
-        GetComponent<SphereCollider>().enabled = true;
-        GetComponent<NavMeshObstacle>().enabled = true;
+        meshRenderer.enabled = true;
+        collider.enabled = true;
+        nmObstacle.enabled = true;
     }
 }

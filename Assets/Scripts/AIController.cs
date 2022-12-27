@@ -7,28 +7,15 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class AIController : Singleton<AIController>
+public class AIController : Actor
 {
-    [SerializeField]private NavMeshAgent navMeshAgent;
-    [SerializeField] private Rigidbody holder,trigger;
-    public CollectArea collectArea;
-    public CollectableHolder collectableHolder;
-
+    [SerializeField] private NavMeshAgent navMeshAgent;
     private Vector3 offset = new Vector3(0f,-0.3f,0f);
-    private Rigidbody rb;
-
-    private Tweener followTween;
-
-    private bool isDead;
     
-    public int getScore => collectArea.getCollectedCount;
+    private Tweener followTween;
+    
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    private void OnEnable()
+    private void Start()
     {
         EventManager.Instance.levelStartEvent.AddListener(StartCollecting);
         EventManager.Instance.levelFailEvent.AddListener(StopAI);
@@ -42,16 +29,13 @@ public class AIController : Singleton<AIController>
     //     EventManager.Instance.levelWinEvent.RemoveListener(StopAI);
     // }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        holder.MovePosition(transform.position+offset);
-        holder.MoveRotation(transform.rotation);
-        
-        trigger.MovePosition(transform.position+offset);
-        trigger.MoveRotation(transform.rotation);
+        base.FixedUpdate();
+        UpdatePosAndRot(transform.position+offset, transform.rotation);
     }
 
-    public void SetupAgentStats(LevelData levelData)
+    public override void SetupValues(LevelData levelData)
     {
         navMeshAgent.speed = levelData.aiSpeed;
         navMeshAgent.angularSpeed = levelData.aiTurnSpeed;
@@ -89,55 +73,28 @@ public class AIController : Singleton<AIController>
         navMeshAgent.SetDestination(randomCollectable.transform.position);
     }
     
-    public void KillAI()
+    public override void KillActor()
     {
-        if (!isDead)
-        {
-            isDead = true;
-            
-            followTween?.Kill();
-            navMeshAgent.enabled = false;
-            holder.gameObject.GetComponent<Collider>().enabled = false;
-            trigger.gameObject.GetComponent<Collider>().enabled = false;
+        base.KillActor();
+        
+        followTween?.Kill();
+        navMeshAgent.enabled = false;
 
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            rb.AddExplosionForce(500f,transform.position + new Vector3(Random.Range(-1f,1f), -1f, Random.Range(-1f,1f)),10f);
-            rb.AddTorque(new Vector3(Random.Range(500f,1000f),Random.Range(500f,1000f),Random.Range(500f,1000f)));
-
-            for (int i = 0; i < collectableHolder.currentCollectables.Count; i++)
-            {
-                collectableHolder.currentCollectables[i].rb.AddExplosionForce(250f,transform.position + Vector3.down,10f);
-                collectableHolder.currentCollectables[i].SwitchLayers(LevelManager.Instance.defaultLayer);
-            }
-            
-            collectableHolder.currentCollectables.Clear();
-
-            DOVirtual.DelayedCall(2f, RespawnAI);
-        }
+        rb.isKinematic = false;
     }
 
-    private void RespawnAI()
+    protected override void Respawn()
     {
-        transform.position = transform.parent.position;
+        base.Respawn();
+
         transform.rotation = Quaternion.Euler(new Vector3(0f,180f,0f));
-        holder.gameObject.GetComponent<Collider>().enabled = true;
-        trigger.gameObject.GetComponent<Collider>().enabled = true;
         rb.isKinematic = true;
-        rb.useGravity = false;
         navMeshAgent.enabled = true;
             
         StartCollecting();
-        DOVirtual.DelayedCall(0.1f, ColliderDelay);
-    }
-
-    private void ColliderDelay()
-    {
-        isDead = false;
         
-        holder.gameObject.GetComponent<Collider>().enabled = true;
-        trigger.gameObject.GetComponent<Collider>().enabled = true;
     }
+    
 
     private void StopAI()
     {

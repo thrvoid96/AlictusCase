@@ -16,9 +16,9 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private GameData gameData;
     public LayerMask goldenLayer, playerLayer, aiLayer, defaultLayer;
     
-    
     public GameData getData => gameData;
     [NonSerialized] public LevelAssetCreate levelAsset;
+    public Actor playerActor, aiActor;
 
     private void Awake()
     {
@@ -56,7 +56,7 @@ public class LevelManager : Singleton<LevelManager>
     private void FinishLevel()
     {
         DOTween.KillAll();
-        if (PlayerController.Instance.getScore >= AIController.Instance.getScore)
+        if (playerActor.getScore >= aiActor.getScore)
         {
             LevelVictory();
         }

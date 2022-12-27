@@ -18,15 +18,15 @@ public class Level : Singleton<Level>
 
         if (!levelData.hasAI)
         {
-            AIController.Instance.transform.parent.gameObject.SetActive(false);
+            LevelManager.Instance.aiActor.transform.parent.gameObject.SetActive(false);
         }
         
         RootController.Instance.SetupFailPanel(levelData);
         RootController.Instance.SetupVictoryPanel(levelData);
         
         RootController.Instance.SetupTopPanel(levelData);
-        PlayerController.Instance.SetupPlayerValues(levelData);
-        AIController.Instance.SetupAgentStats(levelData);
+        LevelManager.Instance.playerActor.SetupValues(levelData);
+        LevelManager.Instance.aiActor.SetupValues(levelData);
         CollectableSpawner.Instance.SetupSpawnerStats(levelData);
 
         if (!levelData.isRandomCollectLevel)
