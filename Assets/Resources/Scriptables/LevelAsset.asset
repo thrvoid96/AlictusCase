@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: LevelAsset
   m_EditorClassIdentifier: 
   levelPrefabs:
+  - {fileID: 7445702397702131272, guid: c7d5110309a5b3643a887c47ba11cb94, type: 3}
   - {fileID: 8586790299832618396, guid: 5c4f707e54b23974fb1d17dd9fa09e4e, type: 3}
+  - {fileID: 135471239546199766, guid: 71ea74c1fab93e141ad27dec60951643, type: 3}
   collectableColors:
   - {r: 1, g: 0.5, b: 0, a: 1}
   - {r: 0, g: 0.55506897, b: 1, a: 1}

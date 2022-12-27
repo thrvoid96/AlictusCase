@@ -12,26 +12,21 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
     [SerializeField]private BoxCollider cubeSpawnArea;
     [SerializeField]private List<Collectable> availableCollectables;
     public List<Collectable> getAvailableCollectablesList => availableCollectables;
-
-    public bool spawnRandom;
-
-    private void Start()
-    {
-        EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
-    }
-
+    
     public void SetupSpawnerStats(LevelData levelData)
     {
         spawnRate = levelData.spawnRate;
         maxAmount = levelData.maxAmount;
+
+        if (levelData.isRandomCollectLevel)
+        {
+            EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
+        }
     }
 
     private void StartSpawn()
     {
-        if (spawnRandom)
-        {
-            DOVirtual.DelayedCall(spawnRate, SpawnCollectable).SetLoops(-1,LoopType.Restart);
-        }
+        DOVirtual.DelayedCall(spawnRate, SpawnCollectable).SetLoops(-1,LoopType.Restart);
     }
     
     public Vector3 RandomPointInBounds() {

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6693f1907826f8649a0e0455131cfa80, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  Level: 1
+  Level: 4
   RandomLevel: 0

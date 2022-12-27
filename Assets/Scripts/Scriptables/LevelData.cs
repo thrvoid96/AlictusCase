@@ -17,10 +17,10 @@ public class LevelData : JsonSerialisableScriptableObject<LevelData>
     
     [Header("Timer level")] 
     public bool isTimerLevel;
-    public float timeToBeatlevel;
+    public float timeToBeatlevel = 15f;
     
     [Header("Random Collect level")] 
     public bool isRandomCollectLevel;
-    public float spawnRate;
-    public int maxAmount;
+    public float spawnRate = 0.1f;
+    public int maxAmount = 100;
 }

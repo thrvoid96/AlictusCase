@@ -7,7 +7,7 @@ using UnityEngine;
 public class Level : Singleton<Level>
 {
     public LevelData levelData;
-    public void Awake()
+    public void Start()
     {
         SetupLevel(levelData);
     }
@@ -28,5 +28,10 @@ public class Level : Singleton<Level>
         PlayerController.Instance.SetupPlayerValues(levelData);
         AIController.Instance.SetupAgentStats(levelData);
         CollectableSpawner.Instance.SetupSpawnerStats(levelData);
+
+        if (!levelData.isRandomCollectLevel)
+        {
+            LevelGeneratorImage.Instance.GenerateLevel();
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 
-public class LevelGeneratorImage : MonoBehaviour
+public class LevelGeneratorImage : Singleton<LevelGeneratorImage>
 {
     public Texture2D map;
     public ColorToPrefab[] colorMappings;
@@ -11,12 +11,7 @@ public class LevelGeneratorImage : MonoBehaviour
     public float scaleFactor;
     public Vector3 startPos;
     
-    void Start()
-    {
-        GenerateLevel();
-    }
-
-    private void GenerateLevel()
+    public void GenerateLevel()
     {
         for (int x = 0; x < map.width; x++)
         {

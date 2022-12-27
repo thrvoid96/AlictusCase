@@ -11,18 +11,20 @@ public class TopPanelView : BaseUIView
 {
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI remainingTimeText;
+    [SerializeField] private GameObject timerObject;
     [SerializeField] private Image fillImage;
 
     private float startTime;
     public void Setup(LevelData levelData)
     {
+        levelText.text = "Level " + LevelManager.Instance.getData.Level;
+        
         if (!levelData.isTimerLevel)
         {
-            gameObject.SetActive(false);
+            timerObject.SetActive(false);
             return;
         }
         startTime = levelData.timeToBeatlevel;
-        levelText.text = "Level " + LevelManager.Instance.getData.Level;
         remainingTimeText.text = startTime.ToString(CultureInfo.InvariantCulture);
         fillImage.fillAmount = 1f;
         

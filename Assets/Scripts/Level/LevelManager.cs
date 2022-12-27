@@ -48,8 +48,8 @@ public class LevelManager : Singleton<LevelManager>
         }
         else
         {
-            gameData.RandomLevel = Random.Range(0, levelAsset.levelPrefabs.Count);
-            Instantiate(levelAsset.levelPrefabs[gameData.RandomLevel]);
+            gameData.RandomLevel = Random.Range(1, levelAsset.levelPrefabs.Count + 1);
+            Instantiate(levelAsset.levelPrefabs[gameData.RandomLevel - 1]);
         }
     }
 
@@ -58,11 +58,11 @@ public class LevelManager : Singleton<LevelManager>
         DOTween.KillAll();
         if (PlayerController.Instance.getScore >= AIController.Instance.getScore)
         {
-            LevelManager.Instance.LevelVictory();
+            LevelVictory();
         }
         else
         {
-            LevelManager.Instance.LevelFail();
+            LevelFail();
         }
     }
 
@@ -82,11 +82,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void ChangeLevel(int levelToSet)
     {
-        if (gameData.Level<levelAsset.levelPrefabs.Count)
-        {
-            gameData.Level = levelToSet;
-        }
-        
+        gameData.Level = levelToSet;
         //SaveData();
         DOVirtual.DelayedCall(0.1f, ReloadScene);
     }
