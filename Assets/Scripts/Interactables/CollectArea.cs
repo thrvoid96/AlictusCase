@@ -22,7 +22,7 @@ public class CollectArea : MonoBehaviour
             if (!collectedObjects.Contains(collectable))
             {
                 collectable.SwitchLayers(LevelManager.Instance.goldenLayer);
-                collectable.SetMaterial(LevelManager.Instance.getGoldenMat);
+                collectable.SetColor(LevelManager.Instance.collectableColors[0]);
                 collectable.ConnectSpringJointTo(rb);
                 collectable.isCollected = true;
                 collectable.transform.SetParent(transform);

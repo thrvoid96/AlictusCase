@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRate: 0.1
   maxAmount: 100
-  cubeSpawnArea: {fileID: 4470450954427527233}
   availableCollectables: []
+  spawnRandom: 0
 --- !u!65 &4470450954427527233
 BoxCollider:
   m_ObjectHideFlags: 0

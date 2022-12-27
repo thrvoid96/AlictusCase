@@ -11,17 +11,14 @@ using Random = UnityEngine.Random;
 public class LevelManager : Singleton<LevelManager>
 {
     public static GameState gamestate = GameState.BeforeStart;
-    
-    [NonSerialized] public LevelAssetCreate levelAsset;
-    [SerializeField] private GameData gameData;
-    public List<Material> getcollectableMats => collectableMats;
-    public Material getGoldenMat => goldenMat;
-    public LayerMask goldenLayer, playerLayer, aiLayer, defaultLayer;
 
-    private List<Material> collectableMats;
-    private Material goldenMat;
-    public GameData getData => gameData;
+    public List<Color> collectableColors;
+    [SerializeField] private GameData gameData;
+    public LayerMask goldenLayer, playerLayer, aiLayer, defaultLayer;
     
+    
+    public GameData getData => gameData;
+    [NonSerialized] public LevelAssetCreate levelAsset;
 
     private void Awake()
     {
@@ -32,9 +29,7 @@ public class LevelManager : Singleton<LevelManager>
     void SetValues()
     {
         levelAsset = Resources.Load<LevelAssetCreate>("Scriptables/LevelAsset");
-        collectableMats = levelAsset.collectableMats;
-        goldenMat = levelAsset.goldenMat;
-
+        collectableColors = levelAsset.collectableColors;
         //LoadData();
         CreateLevel();
     }

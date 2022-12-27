@@ -14,9 +14,9 @@ public class Cube : Collectable
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    public override void SetMaterial(Material material)
+    public override void SetColor(Color color)
     {
-        meshRenderer.material = material;
+        meshRenderer.material.color = color;
     }
 
     public override void ConnectSpringJointTo(Rigidbody rigidbody)

@@ -12,21 +12,21 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
     private BoxCollider cubeSpawnArea;
     public List<Collectable> availableCollectables;
 
-    private List<Material> collectableMats;
+    public bool spawnRandom;
+
 
     private void Awake()
     {
         cubeSpawnArea = GetComponent<BoxCollider>();
     }
 
+    
     private void Start()
     {
-        collectableMats = LevelManager.Instance.getcollectableMats;
-    }
-    
-    private void OnEnable()
-    {
-        EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
+        if (spawnRandom)
+        {
+            EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
+        }
     }
 
     public void StartSpawn()
@@ -50,12 +50,16 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
         }
         
         var spawnedCollectable = ObjectPool.Instance.SpawnFromPool("Cube",RandomPointInBounds(), Random.rotation, transform).GetComponent<Collectable>();
-        spawnedCollectable.SetMaterial(collectableMats[Random.Range(0,collectableMats.Count)]);
+        spawnedCollectable.SetColor(LevelManager.Instance.collectableColors[Random.Range(1,LevelManager.Instance.collectableColors.Count)]);
         availableCollectables.Add(spawnedCollectable);
     }
 
     public void CollectableCollected(Collectable collectable)
     {
-        availableCollectables.Remove(collectable);
+        if (availableCollectables.Contains(collectable))
+        {
+            availableCollectables.Remove(collectable);
+        }
+        
     }
 }

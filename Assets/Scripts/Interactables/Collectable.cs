@@ -7,7 +7,7 @@ public abstract class Collectable : MonoBehaviour,IPooledObject
 {
     public bool isCollected { get; set; }
     public Rigidbody rb;
-    public virtual void SetMaterial(Material material)
+    public virtual void SetColor(Color color)
     {
         
     }

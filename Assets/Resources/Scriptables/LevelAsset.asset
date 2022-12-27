@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelPrefabs:
   - {fileID: 8586790299832618396, guid: 5c4f707e54b23974fb1d17dd9fa09e4e, type: 3}
-  collectableMats:
-  - {fileID: 2100000, guid: 6310fd8a64d9b87488dcd352020fd1ef, type: 2}
-  - {fileID: 2100000, guid: d6eb4b6786f12df4f9ce25eca26eb9b0, type: 2}
-  - {fileID: 2100000, guid: 8c891a2cedb40064fa48f584cee2bec8, type: 2}
-  - {fileID: 2100000, guid: c234acc52e5e14c4ca063a95c96bb072, type: 2}
-  goldenMat: {fileID: 2100000, guid: ede0994256d91c048a0a0d8229489c24, type: 2}
+  collectableColors:
+  - {r: 1, g: 0.5, b: 0, a: 1}
+  - {r: 0, g: 0.55506897, b: 1, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
