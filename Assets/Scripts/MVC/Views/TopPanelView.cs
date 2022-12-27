@@ -16,6 +16,11 @@ public class TopPanelView : BaseUIView
     private float startTime;
     public void Setup(LevelData levelData)
     {
+        if (!levelData.isTimerLevel)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         startTime = levelData.timeToBeatlevel;
         levelText.text = "Level " + LevelManager.Instance.getData.Level;
         remainingTimeText.text = startTime.ToString(CultureInfo.InvariantCulture);
@@ -33,14 +38,7 @@ public class TopPanelView : BaseUIView
             remainingTimeText.text = remainingTime.ToString("0.0");
         }).OnComplete(() =>
         {
-            if (PlayerController.Instance.getScore >= AIController.Instance.getScore)
-            {
-                LevelManager.Instance.LevelComplete();
-            }
-            else
-            {
-                LevelManager.Instance.LevelFail();
-            }
+            EventManager.Instance.levelCompleteEvent.Invoke();
         });
     }
 }

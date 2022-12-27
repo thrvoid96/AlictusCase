@@ -24,7 +24,12 @@ public class LevelManager : Singleton<LevelManager>
     {
         SetValues();
     }
-    
+
+    private void Start()
+    {
+        EventManager.Instance.levelCompleteEvent.AddListener(FinishLevel);
+    }
+
     //--------------------------------------------------------------------------//
     void SetValues()
     {
@@ -47,19 +52,29 @@ public class LevelManager : Singleton<LevelManager>
             Instantiate(levelAsset.levelPrefabs[gameData.RandomLevel]);
         }
     }
-    
 
-    public void LevelComplete()
+    private void FinishLevel()
     {
         DOTween.KillAll();
+        if (PlayerController.Instance.getScore >= AIController.Instance.getScore)
+        {
+            LevelManager.Instance.LevelVictory();
+        }
+        else
+        {
+            LevelManager.Instance.LevelFail();
+        }
+    }
+
+    private void LevelVictory()
+    {
         gamestate = GameState.Victory;
         EventManager.Instance.levelWinEvent.Invoke();
         RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.VictoryPanel);
     }
 
-    public void LevelFail()
+    private void LevelFail()
     {
-        DOTween.KillAll();
         gamestate = GameState.Fail;
         EventManager.Instance.levelFailEvent.Invoke();
         RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.FailPanel);

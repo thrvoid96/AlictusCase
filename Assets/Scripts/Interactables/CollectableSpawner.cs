@@ -11,7 +11,6 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
 
     [SerializeField]private BoxCollider cubeSpawnArea;
     [SerializeField]private List<Collectable> availableCollectables;
-
     public List<Collectable> getAvailableCollectablesList => availableCollectables;
 
     public bool spawnRandom;
@@ -21,7 +20,13 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
         EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
     }
 
-    public void StartSpawn()
+    public void SetupSpawnerStats(LevelData levelData)
+    {
+        spawnRate = levelData.spawnRate;
+        maxAmount = levelData.maxAmount;
+    }
+
+    private void StartSpawn()
     {
         if (spawnRandom)
         {
@@ -54,6 +59,7 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
         if (availableCollectables.Contains(collectable))
         {
             availableCollectables.Remove(collectable);
+            CompleteOnAllCollected();
         }
         
     }
@@ -62,5 +68,13 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
     {
         availableCollectables.Add(collectable);
         
+    }
+
+    private void CompleteOnAllCollected()
+    {
+        if (availableCollectables.Count == 0) 
+        {
+            EventManager.Instance.levelCompleteEvent.Invoke();
+        }
     }
 }

@@ -35,12 +35,12 @@ public class AIController : Singleton<AIController>
         EventManager.Instance.levelWinEvent.AddListener(StopAI);
     }
     
-    private void OnDisable()
-    {
-        EventManager.Instance.levelStartEvent.RemoveListener(StartCollecting);
-        EventManager.Instance.levelFailEvent.RemoveListener(StopAI);
-        EventManager.Instance.levelWinEvent.RemoveListener(StopAI);
-    }
+    // private void OnDisable()
+    // {
+    //     EventManager.Instance.levelStartEvent.RemoveListener(StartCollecting);
+    //     EventManager.Instance.levelFailEvent.RemoveListener(StopAI);
+    //     EventManager.Instance.levelWinEvent.RemoveListener(StopAI);
+    // }
 
     private void FixedUpdate()
     {
@@ -77,6 +77,13 @@ public class AIController : Singleton<AIController>
             navMeshAgent.SetDestination(collectArea.transform.position);
             return;
         }
+
+        if (CollectableSpawner.Instance.getAvailableCollectablesList.Count <= 5 && collectableHolder.currentCollectables.Count != 0)
+        {
+            navMeshAgent.SetDestination(collectArea.transform.position);
+            return;
+        }
+        
         var randomCollectable = CollectableSpawner.Instance.getAvailableCollectablesList
             [Random.Range(0, CollectableSpawner.Instance.getAvailableCollectablesList.Count)];
         navMeshAgent.SetDestination(randomCollectable.transform.position);

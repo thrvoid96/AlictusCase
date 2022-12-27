@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MVC.Controllers;
 using UnityEngine;
 
-public class TimerLevel : BaseLevel
+public class Level : Singleton<Level>
 {
-    public override void SetupLevel(LevelData levelData)
+    public LevelData levelData;
+    public void Awake()
     {
-        base.SetupLevel(levelData);
+        SetupLevel(levelData);
+    }
+
+    private void SetupLevel(LevelData levelData)
+    {
         this.levelData = levelData;
 
         if (!levelData.hasAI)
@@ -15,11 +21,12 @@ public class TimerLevel : BaseLevel
             AIController.Instance.transform.parent.gameObject.SetActive(false);
         }
         
-        RootController.Instance.SetupTopPanel(levelData);
         RootController.Instance.SetupFailPanel(levelData);
         RootController.Instance.SetupVictoryPanel(levelData);
         
+        RootController.Instance.SetupTopPanel(levelData);
         PlayerController.Instance.SetupPlayerValues(levelData);
         AIController.Instance.SetupAgentStats(levelData);
+        CollectableSpawner.Instance.SetupSpawnerStats(levelData);
     }
 }
