@@ -7,6 +7,7 @@ using UnityEngine;
 public class Level : Singleton<Level>
 {
     public LevelData levelData;
+    [SerializeField] private GameObject obstaclesParent;
     public void Start()
     {
         SetupLevel(levelData);
@@ -32,6 +33,11 @@ public class Level : Singleton<Level>
         if (!levelData.isRandomCollectLevel)
         {
             LevelGeneratorImage.Instance.GenerateLevel();
+        }
+
+        if (!levelData.hasAI)
+        {
+            obstaclesParent.SetActive(false);
         }
     }
 }

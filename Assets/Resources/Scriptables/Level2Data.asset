@@ -15,7 +15,7 @@ MonoBehaviour:
   moveSpeed: 7
   smoothMoveTime: 0.1
   turnSpeed: 8
-  playerScale: 1
+  playerScale: 2
   hasAI: 0
   aiSpeed: 5
   aiTurnSpeed: 360

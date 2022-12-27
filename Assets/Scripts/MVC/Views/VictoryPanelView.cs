@@ -24,8 +24,8 @@ public class VictoryPanelView : BaseUIView
 
     private void ShowScores()
     {
-        playerScoreText.text = "Your score: " + LevelManager.Instance.playerActor.getScore;
-        aiScoreText.text = "AI score: " + LevelManager.Instance.aiActor.getScore;
+        playerScoreText.text = "Your <br>score <br>" + LevelManager.Instance.playerActor.getScore;
+        aiScoreText.text = "AI <br>score <br>" + LevelManager.Instance.aiActor.getScore;
     }
     
     public void ChooseLevelButtonClicked()

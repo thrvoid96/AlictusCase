@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   Level: 1
-  RandomLevel: 0
+  RandomLevel: 1

@@ -25,3 +25,4 @@ MonoBehaviour:
   isRandomCollectLevel: 1
   spawnRate: 0.1
   maxAmount: 100
+  hasObstacles: 1

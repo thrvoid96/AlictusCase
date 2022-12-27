@@ -13,7 +13,7 @@ public class FailPanelView : BaseUIView
     {
         if (!levelData.hasAI)
         {
-            aiScoreText.enabled = false;
+            aiScoreText.gameObject.SetActive(false);
         }
         
         EventManager.Instance.levelFailEvent.AddListener(ShowScores);
@@ -22,8 +22,8 @@ public class FailPanelView : BaseUIView
     
     private void ShowScores()
     {
-        playerScoreText.text = "Your score: " + LevelManager.Instance.playerActor.getScore;
-        aiScoreText.text = "AI score: " + LevelManager.Instance.aiActor.getScore;
+        playerScoreText.text = "Your <br>score <br>" + LevelManager.Instance.playerActor.getScore;
+        aiScoreText.text = "AI <br>score <br>" + LevelManager.Instance.aiActor.getScore;
     }
     
     public void RetryLevelButtonClicked()

@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelData: {fileID: 11400000, guid: 89751300a8649eb488b61d4409d6fa81, type: 2}
+  obstaclesParent: {fileID: 6149618330817780693}
 --- !u!1001 &5339815158154768046
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,7 +11,11 @@ public class CollectArea : MonoBehaviour
     [SerializeField] private Transform particleTransform;
     [SerializeField] private float scaleIncrease;
     [SerializeField] private List<Collectable> collectedObjects;
-    
+
+    private void Start()
+    {
+        EventManager.Instance.levelCompleteEvent.AddListener(DisableArea);
+    }
 
     public int getCollectedCount => collectedObjects.Count;
     
@@ -37,5 +41,10 @@ public class CollectArea : MonoBehaviour
     private void UpdateScoreText()
     {
         collectedText.text = collectedObjects.Count.ToString();
+    }
+
+    private void DisableArea()
+    {
+        transform.GetChild(0).GetComponent<Collider>().enabled = false;
     }
 }

@@ -23,4 +23,7 @@ public class LevelData : JsonSerialisableScriptableObject<LevelData>
     public bool isRandomCollectLevel;
     public float spawnRate = 0.1f;
     public int maxAmount = 100;
+
+    [Header("Obstacles")] 
+    public bool hasObstacles;
 }

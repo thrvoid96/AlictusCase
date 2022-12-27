@@ -55,6 +55,8 @@ public class PlayerController : Actor
         smoothMoveTime = levelData.smoothMoveTime;
         turnSpeed = levelData.turnSpeed;
         transform.localScale = Vector3.one * levelData.playerScale;
+        holderModel.gameObject.transform.localScale = transform.localScale;
+        holderTrigger.gameObject.transform.localScale = transform.localScale;
     }
     
     public override void KillActor()
