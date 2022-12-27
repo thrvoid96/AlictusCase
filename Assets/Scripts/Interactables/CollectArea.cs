@@ -1,20 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CollectArea : MonoBehaviour
 {
-    public List<Collectable> collectedObjects;
-    public float scaleIncrease;
-    public bool isAI;
-    private Rigidbody rb;
+    [SerializeField] private TextMeshProUGUI collectedText;
+    [SerializeField] private Transform particleTransform;
+    [SerializeField] private float scaleIncrease;
+    [SerializeField] private List<Collectable> collectedObjects;
+    
 
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-
+    public int getCollectedCount => collectedObjects.Count;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Collectable>(out var collectable))
@@ -23,24 +23,19 @@ public class CollectArea : MonoBehaviour
             {
                 collectable.SwitchLayers(LevelManager.Instance.goldenLayer);
                 collectable.SetColor(LevelManager.Instance.collectableColors[0]);
-                collectable.ConnectSpringJointTo(rb);
+                collectable.ConnectSpringJointTo(GetComponent<Rigidbody>());
                 collectable.isCollected = true;
                 collectable.transform.SetParent(transform);
                 collectedObjects.Add(collectable);
-                transform.localScale += (Vector3.one * scaleIncrease);
+                particleTransform.localScale += (Vector3.one * scaleIncrease);
                 CollectableSpawner.Instance.RemoveFromList(collectable);
-
-                if (isAI)
-                {
-                    AIController.Instance.UpdateScoreText();
-                }
-
-                else
-                {
-                    PlayerController.Instance.UpdateScoreText();
-                }
-                
+                UpdateScoreText();
             }
         }
+    }
+
+    private void UpdateScoreText()
+    {
+        collectedText.text = collectedObjects.Count.ToString();
     }
 }

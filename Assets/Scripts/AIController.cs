@@ -11,7 +11,6 @@ public class AIController : Singleton<AIController>
 {
     [SerializeField]private NavMeshAgent navMeshAgent;
     [SerializeField] private Rigidbody holder,trigger;
-    [SerializeField] private TextMeshProUGUI scoreText;
     public CollectArea collectArea;
     public CollectableHolder collectableHolder;
 
@@ -22,7 +21,7 @@ public class AIController : Singleton<AIController>
 
     private bool isDead;
     
-    public int getScore => collectArea.collectedObjects.Count;
+    public int getScore => collectArea.getCollectedCount;
 
     private void Awake()
     {
@@ -81,11 +80,6 @@ public class AIController : Singleton<AIController>
         var randomCollectable = CollectableSpawner.Instance.getAvailableCollectablesList
             [Random.Range(0, CollectableSpawner.Instance.getAvailableCollectablesList.Count)];
         navMeshAgent.SetDestination(randomCollectable.transform.position);
-    }
-    
-    public void UpdateScoreText()
-    {
-        scoreText.text = collectArea.collectedObjects.Count.ToString();
     }
     
     public void KillAI()

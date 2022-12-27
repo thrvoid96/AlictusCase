@@ -10,8 +10,7 @@ public class PlayerController : Singleton<PlayerController>
 {
     private Rigidbody rb;
     [SerializeField] private Rigidbody holder,trigger;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    
+
     public CollectArea collectArea;
     public CollectableHolder collectableHolder;
 
@@ -27,7 +26,7 @@ public class PlayerController : Singleton<PlayerController>
     private Joystick joystick;
     private bool isDead;
 
-    public int getScore => collectArea.collectedObjects.Count;
+    public int getScore => collectArea.getCollectedCount;
 
     private void Awake()
     {
@@ -67,11 +66,7 @@ public class PlayerController : Singleton<PlayerController>
         turnSpeed = levelData.turnSpeed;
         transform.localScale = Vector3.one * levelData.playerScale;
     }
-
-    public void UpdateScoreText()
-    {
-        scoreText.text = collectArea.collectedObjects.Count.ToString();
-    }
+    
 
     public void KillPlayer()
     {
