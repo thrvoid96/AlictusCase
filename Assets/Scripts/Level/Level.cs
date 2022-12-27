@@ -35,7 +35,7 @@ public class Level : Singleton<Level>
             LevelGeneratorImage.Instance.GenerateLevel();
         }
 
-        if (!levelData.hasAI)
+        if (!levelData.hasObstacles)
         {
             obstaclesParent.SetActive(false);
         }

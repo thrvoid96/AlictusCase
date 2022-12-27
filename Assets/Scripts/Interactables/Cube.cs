@@ -24,7 +24,7 @@ public class Cube : Collectable
         var springJoint = gameObject.AddComponent<SpringJoint>();
         springJoint.autoConfigureConnectedAnchor = false;
         springJoint.connectedAnchor = Vector3.zero;
-        springJoint.spring = 10f;
+        springJoint.spring = 500f;
         springJoint.connectedBody = rigidbody;
     }
 
