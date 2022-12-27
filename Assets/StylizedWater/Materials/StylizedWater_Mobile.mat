@@ -12,7 +12,7 @@ Material:
   m_ShaderKeywords: _NORMAL_MAP_ON _UNLIT_ON _USEINTERSECTIONFOAM_ON _WORLDSPACETILIBG_ON
     _WORLDSPACETILING_ON
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -110,7 +110,7 @@ Material:
     m_Colors:
     - _FresnelColor: {r: 0.5, g: 0.8551724, b: 1, a: 0.084}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0.509}
-    - _WaterColor: {r: 0.11754424, g: 0.63488847, b: 1, a: 0}
-    - _WaterShallowColor: {r: 0.41901472, g: 1, b: 0.8798174, a: 1}
+    - _WaterColor: {r: 0.11754129, g: 0.63488847, b: 1, a: 0}
+    - _WaterShallowColor: {r: 0.41901177, g: 1, b: 0.8798174, a: 1}
     - _WaveDirection: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -21,13 +21,9 @@ public class VictoryPanelController : SubController<VictoryPanelView>
     /// <summary>
     /// Handling info panel view.
     /// </summary>
-    public void SetupView(int playerScore)
+    public void SetupView(LevelData levelData)
     {
-        view.Setup(playerScore);
+        view.Setup(levelData);
     }
-    
-    public void SetupView(int playerScore, int aiScore)
-    {
-        view.Setup(playerScore,aiScore);
-    }
+
 }

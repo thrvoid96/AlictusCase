@@ -36,9 +36,4 @@ public class CollectableHolder : MonoBehaviour
             currentCollectables.Remove(collectable);
         }
     }
-
-    public void RemoveCollectableFromList()
-    {
-        
-    }
 }

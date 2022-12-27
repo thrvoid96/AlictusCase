@@ -9,29 +9,24 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
     public float spawnRate;
     public int maxAmount;
 
-    private BoxCollider cubeSpawnArea;
-    public List<Collectable> availableCollectables;
+    [SerializeField]private BoxCollider cubeSpawnArea;
+    [SerializeField]private List<Collectable> availableCollectables;
+
+    public List<Collectable> getAvailableCollectablesList => availableCollectables;
 
     public bool spawnRandom;
 
-
-    private void Awake()
-    {
-        cubeSpawnArea = GetComponent<BoxCollider>();
-    }
-
-    
     private void Start()
     {
-        if (spawnRandom)
-        {
-            EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
-        }
+        EventManager.Instance.levelStartEvent.AddListener(StartSpawn);
     }
 
     public void StartSpawn()
     {
-        DOVirtual.DelayedCall(spawnRate, SpawnCollectable).SetLoops(-1,LoopType.Restart);
+        if (spawnRandom)
+        {
+            DOVirtual.DelayedCall(spawnRate, SpawnCollectable).SetLoops(-1,LoopType.Restart);
+        }
     }
     
     public Vector3 RandomPointInBounds() {
@@ -51,15 +46,21 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
         
         var spawnedCollectable = ObjectPool.Instance.SpawnFromPool("Cube",RandomPointInBounds(), Random.rotation, transform).GetComponent<Collectable>();
         spawnedCollectable.SetColor(LevelManager.Instance.collectableColors[Random.Range(1,LevelManager.Instance.collectableColors.Count)]);
-        availableCollectables.Add(spawnedCollectable);
+        AddToList(spawnedCollectable);
     }
 
-    public void CollectableCollected(Collectable collectable)
+    public void RemoveFromList(Collectable collectable)
     {
         if (availableCollectables.Contains(collectable))
         {
             availableCollectables.Remove(collectable);
         }
+        
+    }
+    
+    public void AddToList(Collectable collectable)
+    {
+        availableCollectables.Add(collectable);
         
     }
 }

@@ -21,15 +21,26 @@ public class AIController : Singleton<AIController>
     private Tweener followTween;
 
     private bool isDead;
+    
+    public int getScore => collectArea.collectedObjects.Count;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         EventManager.Instance.levelStartEvent.AddListener(StartCollecting);
+        EventManager.Instance.levelFailEvent.AddListener(StopAI);
+        EventManager.Instance.levelWinEvent.AddListener(StopAI);
+    }
+    
+    private void OnDisable()
+    {
+        EventManager.Instance.levelStartEvent.RemoveListener(StartCollecting);
+        EventManager.Instance.levelFailEvent.RemoveListener(StopAI);
+        EventManager.Instance.levelWinEvent.RemoveListener(StopAI);
     }
 
     private void FixedUpdate()
@@ -67,7 +78,8 @@ public class AIController : Singleton<AIController>
             navMeshAgent.SetDestination(collectArea.transform.position);
             return;
         }
-        var randomCollectable = CollectableSpawner.Instance.availableCollectables[Random.Range(0, CollectableSpawner.Instance.availableCollectables.Count)];
+        var randomCollectable = CollectableSpawner.Instance.getAvailableCollectablesList
+            [Random.Range(0, CollectableSpawner.Instance.getAvailableCollectablesList.Count)];
         navMeshAgent.SetDestination(randomCollectable.transform.position);
     }
     
@@ -124,5 +136,10 @@ public class AIController : Singleton<AIController>
         
         holder.gameObject.GetComponent<Collider>().enabled = true;
         trigger.gameObject.GetComponent<Collider>().enabled = true;
+    }
+
+    private void StopAI()
+    {
+        navMeshAgent.enabled = false;
     }
 }

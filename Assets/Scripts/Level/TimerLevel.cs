@@ -16,6 +16,9 @@ public class TimerLevel : BaseLevel
         }
         
         RootController.Instance.SetupTopPanel(levelData);
+        RootController.Instance.SetupFailPanel(levelData);
+        RootController.Instance.SetupVictoryPanel(levelData);
+        
         PlayerController.Instance.SetupPlayerValues(levelData);
         AIController.Instance.SetupAgentStats(levelData);
     }

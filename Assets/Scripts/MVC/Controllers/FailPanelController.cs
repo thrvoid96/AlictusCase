@@ -21,9 +21,9 @@ public class FailPanelController : SubController<FailPanelView>
     /// <summary>
     /// Handling info panel view.
     /// </summary>
-    public void SetupView()
+    public void SetupView(LevelData levelData)
     {
-        view.Setup();
+        view.Setup(levelData);
     }
     
 }

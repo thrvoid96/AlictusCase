@@ -11,27 +11,30 @@ public class VictoryPanelView : BaseUIView
     [SerializeField] private TextMeshProUGUI playerScoreText,aiScoreText;
     [SerializeField] private Button chooseLevelButton, nextLevelButton;
 
-    public UnityEvent chooseLevelButtonEvent, nextLeveLButtonEvent;
-    
-    public void Setup(int playerScore, int aiScore)
+    public void Setup(LevelData levelData)
     {
-        playerScoreText.text = playerScore.ToString();
-        aiScoreText.text = aiScore.ToString();
-    }
-    
-    public void Setup(int playerScore)
-    {
-        playerScoreText.text = playerScore.ToString();
-        aiScoreText.gameObject.SetActive(false);
+        if (!levelData.hasAI)
+        {
+            aiScoreText.enabled = false;
+        }
+        
+        EventManager.Instance.levelFailEvent.AddListener(ShowScores);
+        EventManager.Instance.levelWinEvent.AddListener(ShowScores);
     }
 
+    private void ShowScores()
+    {
+        playerScoreText.text = "Your score: " + PlayerController.Instance.getScore;
+        aiScoreText.text = "AI score: " + AIController.Instance.getScore;
+    }
+    
     public void ChooseLevelButtonClicked()
     {
-        chooseLevelButtonEvent?.Invoke();
+        EventManager.Instance.chooseLevelButtonEvent?.Invoke();
     }
     
     public void NextLevelButtonClicked()
     {
-        nextLeveLButtonEvent?.Invoke();
+        EventManager.Instance.nextLevelButtonEvent?.Invoke();
     }
 }

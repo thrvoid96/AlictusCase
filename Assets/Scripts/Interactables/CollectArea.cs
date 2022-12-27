@@ -28,7 +28,7 @@ public class CollectArea : MonoBehaviour
                 collectable.transform.SetParent(transform);
                 collectedObjects.Add(collectable);
                 transform.localScale += (Vector3.one * scaleIncrease);
-                CollectableSpawner.Instance.CollectableCollected(collectable);
+                CollectableSpawner.Instance.RemoveFromList(collectable);
 
                 if (isAI)
                 {

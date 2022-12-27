@@ -44,7 +44,7 @@ public class LevelGeneratorImage : MonoBehaviour
             {
                 Vector3 position = new Vector3(x, 1, y) * scaleFactor;
                 var spawnedObject = Instantiate(colorMapping.prefab, startPos + position, Quaternion.identity, transform).GetComponent<Collectable>();
-                CollectableSpawner.Instance.availableCollectables.Add(spawnedObject);
+                CollectableSpawner.Instance.AddToList(spawnedObject);
                 spawnedObject.SetColor(colorMapping.color);
             }
         }

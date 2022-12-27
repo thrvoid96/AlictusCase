@@ -42,10 +42,12 @@ namespace MVC.Controllers
             tapToBeginController.root = this;
             levelChooseController.root = this;
             
-            victoryPanelController.View.chooseLevelButtonEvent.AddListener(delegate { SwitchToController(ControllerTypeEnum.LevelChooseController); });
-            victoryPanelController.View.nextLeveLButtonEvent.AddListener(delegate { LevelManager.Instance.ChangeLevel(LevelManager.Instance.getData.Level + 1); });
+            EventManager.Instance.chooseLevelButtonEvent.AddListener(delegate { SwitchToController(ControllerTypeEnum.LevelChooseController); });
+            EventManager.Instance.nextLevelButtonEvent.AddListener(delegate { LevelManager.Instance.ChangeLevel(LevelManager.Instance.getData.Level + 1); });
+            EventManager.Instance.retryLevelButtonEvent.AddListener(delegate { LevelManager.Instance.ChangeLevel(LevelManager.Instance.getData.Level); });
             
             SetupLevelChoosePanel();
+
             
             DisengageController(ControllerTypeEnum.VictoryPanel);
             DisengageController(ControllerTypeEnum.FailPanel);
@@ -131,21 +133,16 @@ namespace MVC.Controllers
             topPanelController.SetupView(levelData);
         }
         
-        public void SetupVictoryPanel(int playerScore)
+        public void SetupVictoryPanel(LevelData levelData)
         {
-            victoryPanelController.SetupView(playerScore);
+            victoryPanelController.SetupView(levelData);
         }
         
-        public void SetupVictoryPanel(int playerScore, int aiScore)
+        public void SetupFailPanel(LevelData levelData)
         {
-            victoryPanelController.SetupView(playerScore,aiScore);
+            failPanelController.SetupView(levelData);
         }
-        
-        public void SetupFailPanel()
-        {
-            failPanelController.SetupView();
-        }
-        
+
         public void SetupLevelChoosePanel()
         {
             levelChooseController.SetupView();

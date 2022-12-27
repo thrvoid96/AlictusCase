@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
@@ -28,7 +29,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             return _instance;
         }
     }
-
+    
     protected virtual void Initialize()
     {
         

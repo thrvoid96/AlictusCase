@@ -33,7 +33,14 @@ public class TopPanelView : BaseUIView
             remainingTimeText.text = remainingTime.ToString("0.0");
         }).OnComplete(() =>
         {
-            LevelManager.Instance.LevelComplete();
+            if (PlayerController.Instance.getScore >= AIController.Instance.getScore)
+            {
+                LevelManager.Instance.LevelComplete();
+            }
+            else
+            {
+                LevelManager.Instance.LevelFail();
+            }
         });
     }
 }

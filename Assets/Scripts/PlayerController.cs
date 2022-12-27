@@ -27,6 +27,8 @@ public class PlayerController : Singleton<PlayerController>
     private Joystick joystick;
     private bool isDead;
 
+    public int getScore => collectArea.collectedObjects.Count;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();

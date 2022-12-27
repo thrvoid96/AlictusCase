@@ -54,7 +54,6 @@ public class LevelManager : Singleton<LevelManager>
         DOTween.KillAll();
         gamestate = GameState.Victory;
         EventManager.Instance.levelWinEvent.Invoke();
-        RootController.Instance.SetupVictoryPanel(PlayerController.Instance.collectArea.collectedObjects.Count);
         RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.VictoryPanel);
     }
 
@@ -62,8 +61,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         DOTween.KillAll();
         gamestate = GameState.Fail;
-        EventManager.Instance.LevelFailEvent.Invoke();
-        RootController.Instance.SetupFailPanel();
+        EventManager.Instance.levelFailEvent.Invoke();
         RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.FailPanel);
     }
 
