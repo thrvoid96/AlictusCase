@@ -22,6 +22,8 @@ public class CollectableHolder : MonoBehaviour
             }
             
             currentCollectables.Add(collectable);
+            collectable.isBeingHeld = true;
+            CollectableSpawner.Instance.RemoveFromList(collectable);
         }
     }
 
@@ -32,8 +34,15 @@ public class CollectableHolder : MonoBehaviour
             if (!collectable.isCollected)
             {
                 collectable.SwitchLayers(LevelManager.Instance.defaultLayer);
+                CollectableSpawner.Instance.AddToList(collectable);
             }
             currentCollectables.Remove(collectable);
+            collectable.isBeingHeld = false;
+
+            if (currentCollectables.Count == 0)
+            {
+                EventManager.Instance.aiCartEmptiedEvent.Invoke();
+            }
         }
     }
 }

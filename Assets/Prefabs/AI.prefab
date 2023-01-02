@@ -164,6 +164,7 @@ MonoBehaviour:
   collectArea: {fileID: 6304020730696213611}
   collectableHolder: {fileID: 3458349462689291239}
   navMeshAgent: {fileID: 6357890165462940234}
+  amountToReturn: 5
 --- !u!195 &6357890165462940234
 NavMeshAgent:
   m_ObjectHideFlags: 0

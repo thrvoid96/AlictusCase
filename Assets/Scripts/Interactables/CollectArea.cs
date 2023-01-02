@@ -32,7 +32,6 @@ public class CollectArea : MonoBehaviour
                 collectable.transform.SetParent(transform);
                 collectedObjects.Add(collectable);
                 particleTransform.localScale += (Vector3.one * scaleIncrease);
-                CollectableSpawner.Instance.RemoveFromList(collectable);
                 UpdateScoreText();
             }
         }

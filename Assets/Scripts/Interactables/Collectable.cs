@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class Collectable : MonoBehaviour,IPooledObject
 {
     public bool isCollected { get; set; }
+    public bool isBeingHeld { get; set; }
     public Rigidbody rb;
     public virtual void SetColor(Color color)
     {

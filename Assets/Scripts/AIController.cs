@@ -10,16 +10,20 @@ using Random = UnityEngine.Random;
 public class AIController : Actor
 {
     [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private int amountToReturn;
     private Vector3 offset = new Vector3(0f,-0.3f,0f);
     
     private Tweener followTween;
-    
+
+    private Collectable targetCollectable;
 
     private void Start()
     {
         EventManager.Instance.levelStartEvent.AddListener(StartCollecting);
         EventManager.Instance.levelFailEvent.AddListener(StopAI);
         EventManager.Instance.levelWinEvent.AddListener(StopAI);
+        EventManager.Instance.aiCartEmptiedEvent.AddListener(StartCollecting);
+        
     }
     
     // private void OnDisable()
@@ -28,7 +32,7 @@ public class AIController : Actor
     //     EventManager.Instance.levelFailEvent.RemoveListener(StopAI);
     //     EventManager.Instance.levelWinEvent.RemoveListener(StopAI);
     // }
-
+    
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -44,33 +48,38 @@ public class AIController : Actor
 
     public void StartCollecting()
     {
-        DOVirtual.DelayedCall(0.1f, GoToRandomCollectable);
-        
+        followTween?.Kill();
         float randomVal = 0f;
-        followTween = DOTween.To(() => randomVal, x => randomVal = x, 1f, 1f).OnStepComplete(() =>
+        followTween = DOTween.To(() => randomVal, x => randomVal = x, 1f, 1f).OnUpdate(() =>
         {
             GoToRandomCollectable();
         }).SetLoops(-1, LoopType.Restart);
-
     }
 
     private void GoToRandomCollectable()
     {
-        if (collectableHolder.currentCollectables.Count >= 5)
-        {
-            navMeshAgent.SetDestination(collectArea.transform.position);
-            return;
-        }
+        // If the AI is holding too many collectibles, drop them and return
 
-        if (CollectableSpawner.Instance.getAvailableCollectablesList.Count <= 5 && collectableHolder.currentCollectables.Count != 0)
+        if (collectableHolder.currentCollectables.Count >= amountToReturn)
         {
-            navMeshAgent.SetDestination(collectArea.transform.position);
+            navMeshAgent.destination = transform.parent.position;
+            targetCollectable = null;
+            followTween.Kill();
             return;
         }
         
-        var randomCollectable = CollectableSpawner.Instance.getAvailableCollectablesList
-            [Random.Range(0, CollectableSpawner.Instance.getAvailableCollectablesList.Count)];
-        navMeshAgent.SetDestination(randomCollectable.transform.position);
+        if (targetCollectable == null)
+        {
+            targetCollectable = CollectableSpawner.Instance.getAvailableCollectablesList[Random.Range(0, CollectableSpawner.Instance.getAvailableCollectablesList.Count)];
+        }
+        else if (targetCollectable.isBeingHeld)
+        {
+            targetCollectable = null;
+            return;
+        }
+        
+        // Set the destination of the NavMeshAgent to be the position of the closest collectible
+        navMeshAgent.destination = targetCollectable.transform.position;
     }
     
     public override void KillActor()
@@ -92,7 +101,6 @@ public class AIController : Actor
         navMeshAgent.enabled = true;
             
         StartCollecting();
-        
     }
     
 

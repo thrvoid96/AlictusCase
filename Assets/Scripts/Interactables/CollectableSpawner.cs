@@ -26,6 +26,7 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
 
     private void StartSpawn()
     {
+        SpawnCollectable();
         DOVirtual.DelayedCall(spawnRate, SpawnCollectable).SetLoops(-1,LoopType.Restart);
     }
     
@@ -62,7 +63,6 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
     public void AddToList(Collectable collectable)
     {
         availableCollectables.Add(collectable);
-        
     }
 
     private void CompleteOnAllCollected()

@@ -6,6 +6,12 @@ using UnityEngine.Events;
 
 public class EventManager : Singleton<EventManager>
 {
-    public UnityEvent levelStartEvent, levelWinEvent, levelFailEvent, levelCompleteEvent,
-        chooseLevelButtonEvent, nextLevelButtonEvent, retryLevelButtonEvent;
+    public UnityEvent levelStartEvent,
+        levelWinEvent,
+        levelFailEvent,
+        levelCompleteEvent,
+        chooseLevelButtonEvent,
+        nextLevelButtonEvent,
+        retryLevelButtonEvent,
+        aiCartEmptiedEvent;
 }

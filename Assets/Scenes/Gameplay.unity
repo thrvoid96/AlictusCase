@@ -336,7 +336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114000012808803664, guid: aad92e3fb9d6ac741b40be74dcab3cd5, type: 3}
       propertyPath: waterColor.r
-      value: 0.11753524
+      value: 0.11753025
       objectReference: {fileID: 0}
     - target: {fileID: 114000012808803664, guid: aad92e3fb9d6ac741b40be74dcab3cd5, type: 3}
       propertyPath: normalStrength
@@ -360,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114000012808803664, guid: aad92e3fb9d6ac741b40be74dcab3cd5, type: 3}
       propertyPath: waterShallowColor.r
-      value: 0.41900575
+      value: 0.41900074
       objectReference: {fileID: 0}
     - target: {fileID: 114000012808803664, guid: aad92e3fb9d6ac741b40be74dcab3cd5, type: 3}
       propertyPath: enableSecondaryWaves
