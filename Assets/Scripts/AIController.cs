@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class AIController : Actor
@@ -44,6 +45,11 @@ public class AIController : Actor
         navMeshAgent.speed = levelData.aiSpeed;
         navMeshAgent.angularSpeed = levelData.aiTurnSpeed;
         navMeshAgent.acceleration = levelData.aiAcceleration;
+    }
+
+    public override UnityEvent GetCollectEvent()
+    {
+        return EventManager.Instance.aiCollectedEvent;
     }
 
     public void StartCollecting()
@@ -104,7 +110,7 @@ public class AIController : Actor
     }
     
 
-    private void StopAI()
+    private void StopAI(List<Actor> allActors)
     {
         navMeshAgent.enabled = false;
     }

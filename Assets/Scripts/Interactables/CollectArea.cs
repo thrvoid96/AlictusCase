@@ -23,16 +23,25 @@ public class CollectArea : MonoBehaviour
     {
         if (other.TryGetComponent<Collectable>(out var collectable))
         {
-            if (!collectedObjects.Contains(collectable))
+            if (!collectable.isCollected)
             {
+                collectable.isCollected = true;
+                collectable.isBeingHeld = false;
+                
                 collectable.SwitchLayers(LevelManager.Instance.goldenLayer);
                 collectable.SetColor(LevelManager.Instance.collectableColors[0]);
                 collectable.ConnectSpringJointTo(GetComponent<Rigidbody>());
-                collectable.isCollected = true;
                 collectable.transform.SetParent(transform);
-                collectedObjects.Add(collectable);
+                
                 particleTransform.localScale += (Vector3.one * scaleIncrease);
+                
+                collectedObjects.Add(collectable);
+                CollectableSpawner.Instance.RemoveFromList(collectable);
+
+                transform.parent.GetChild(0).GetComponent<Actor>().GetCollectEvent().Invoke();
                 UpdateScoreText();
+                
+                CompleteOnAllCollected();
             }
         }
     }
@@ -45,5 +54,13 @@ public class CollectArea : MonoBehaviour
     private void DisableArea()
     {
         transform.GetChild(0).GetComponent<Collider>().enabled = false;
+    }
+    
+    private void CompleteOnAllCollected()
+    {
+        if (CollectableSpawner.Instance.getAvailableCollectablesList.Count == 0) 
+        {
+            EventManager.Instance.levelCompleteEvent.Invoke();
+        }
     }
 }

@@ -55,7 +55,6 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
         if (availableCollectables.Contains(collectable))
         {
             availableCollectables.Remove(collectable);
-            CompleteOnAllCollected();
         }
         
     }
@@ -63,13 +62,5 @@ public class CollectableSpawner : Singleton<CollectableSpawner>
     public void AddToList(Collectable collectable)
     {
         availableCollectables.Add(collectable);
-    }
-
-    private void CompleteOnAllCollected()
-    {
-        if (availableCollectables.Count == 0) 
-        {
-            EventManager.Instance.levelCompleteEvent.Invoke();
-        }
     }
 }

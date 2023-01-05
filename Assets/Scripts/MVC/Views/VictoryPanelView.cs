@@ -22,10 +22,10 @@ public class VictoryPanelView : BaseUIView
         EventManager.Instance.levelWinEvent.AddListener(ShowScores);
     }
 
-    private void ShowScores()
+    private void ShowScores(List<Actor> allActors)
     {
-        playerScoreText.text = "Your <br>score <br>" + LevelManager.Instance.playerActor.getScore;
-        aiScoreText.text = "AI <br>score <br>" + LevelManager.Instance.aiActor.getScore;
+        playerScoreText.text = "Your <br>score <br>" + allActors[0].getScore;
+        aiScoreText.text = "AI <br>score <br>" + allActors[1].getScore;
     }
     
     public void ChooseLevelButtonClicked()

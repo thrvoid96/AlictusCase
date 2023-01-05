@@ -10,37 +10,54 @@ using UnityEngine.UI;
 public class TopPanelView : BaseUIView
 {
     [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI remainingTimeText;
-    [SerializeField] private GameObject timerObject;
+    [SerializeField] private TextMeshProUGUI remainingAmountText;
     [SerializeField] private Image fillImage;
 
-    private float startTime;
+    private float startAmount;
     public void Setup(LevelData levelData)
     {
         levelText.text = "Level " + LevelManager.Instance.getData.Level;
+        fillImage.fillAmount = 0f;
         
         if (!levelData.isTimerLevel)
         {
-            timerObject.SetActive(false);
-            return;
+            startAmount = CollectableSpawner.Instance.getAvailableCollectablesList.Count;
+            remainingAmountText.text = 0 + " / " + startAmount;
+            
+            EventManager.Instance.playerCollectedEvent.AddListener(CalculateCollected);
+            EventManager.Instance.aiCollectedEvent.AddListener(CalculateCollected);
         }
-        startTime = levelData.timeToBeatlevel;
-        remainingTimeText.text = startTime.ToString(CultureInfo.InvariantCulture);
-        fillImage.fillAmount = 1f;
-        
-        EventManager.Instance.levelStartEvent.AddListener(StartTimer);
+        else
+        {
+            startAmount = levelData.timeToBeatlevel;
+            remainingAmountText.text = startAmount.ToString(CultureInfo.InvariantCulture);
+            
+            EventManager.Instance.levelStartEvent.AddListener(StartTimer);
+        }
     }
 
     private void StartTimer()
     {
-        float remainingTime = startTime;
-        DOTween.To(() => remainingTime, x => remainingTime = x, 0f, startTime).SetEase(Ease.Linear).OnUpdate(() =>
+        float remainingTime = startAmount;
+        DOTween.To(() => remainingTime, x => remainingTime = x, 0f, startAmount).SetEase(Ease.Linear).OnUpdate(() =>
         {
-            fillImage.fillAmount = remainingTime / startTime;
-            remainingTimeText.text = remainingTime.ToString("0.0");
+            fillImage.fillAmount = remainingTime / startAmount;
+            remainingAmountText.text = remainingTime.ToString("0.0");
         }).OnComplete(() =>
         {
             EventManager.Instance.levelCompleteEvent.Invoke();
         });
+    }
+
+    private void CalculateCollected()
+    {
+        var final = 0;
+        for (int i = 0; i < LevelManager.Instance.getActorsInScene.Count; i++)
+        {
+            final += LevelManager.Instance.getActorsInScene[i].getScore;
+        }
+        
+        remainingAmountText.text = final + " / " + startAmount;
+        fillImage.fillAmount = final / startAmount;
     }
 }

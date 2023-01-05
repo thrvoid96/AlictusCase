@@ -161,6 +161,9 @@ MonoBehaviour:
   holderModel: {fileID: 184294354140177645}
   holderTrigger: {fileID: 7649588731919991874}
   rb: {fileID: 1053952992735623981}
+  layerToSwitchCollectables:
+    serializedVersion: 2
+    m_Bits: 8192
   collectArea: {fileID: 6304020730696213611}
   collectableHolder: {fileID: 3458349462689291239}
   navMeshAgent: {fileID: 6357890165462940234}
@@ -283,7 +286,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCollectables: []
-  isAI: 1
 --- !u!54 &7649588731919991874
 Rigidbody:
   m_ObjectHideFlags: 0

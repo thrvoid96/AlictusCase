@@ -2,17 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public abstract class Actor : MonoBehaviour
+public abstract class Actor : MonoBehaviour, IValueSetter, IDeactivateable,ILayerSwitch
 {
     [SerializeField] protected Rigidbody holderModel, holderTrigger;
     [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected LayerMask layerToSwitchCollectables;
     
     public CollectArea collectArea;
     public CollectableHolder collectableHolder;
-    
+
     protected bool isDead;
     
     public int getScore => collectArea.getCollectedCount;
@@ -29,10 +33,15 @@ public abstract class Actor : MonoBehaviour
         holderTrigger.MovePosition(targetPos);
         holderTrigger.MoveRotation(targetRot);
     }
-
+    
     public virtual void SetupValues(LevelData levelData)
     {
         
+    }
+
+    public virtual UnityEvent GetCollectEvent()
+    {
+        return null;
     }
 
     public virtual void KillActor()
@@ -75,5 +84,15 @@ public abstract class Actor : MonoBehaviour
         isDead = false;
         holderModel.gameObject.GetComponent<Collider>().enabled = true;
         holderTrigger.gameObject.GetComponent<Collider>().enabled = true;
+    }
+
+    public void SetObjectActivity(bool value)
+    {
+        transform.parent.gameObject.SetActive(value);
+    }
+
+    public LayerMask GetLayerToSwitch()
+    {
+        return layerToSwitchCollectables;
     }
 }

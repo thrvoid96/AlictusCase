@@ -82,6 +82,9 @@ MonoBehaviour:
   holderModel: {fileID: 6589371691147908343}
   holderTrigger: {fileID: 3734702853100172376}
   rb: {fileID: 128171661837879889}
+  layerToSwitchCollectables:
+    serializedVersion: 2
+    m_Bits: 128
   collectArea: {fileID: 128171662457426995}
   collectableHolder: {fileID: 8503392694939315197}
   moveSpeed: 7
@@ -162,7 +165,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCollectables: []
-  isAI: 0
 --- !u!54 &3734702853100172376
 Rigidbody:
   m_ObjectHideFlags: 0

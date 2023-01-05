@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Linq;
 using DG.Tweening;
 using MVC.Controllers;
 using UnityEngine.SceneManagement;
@@ -14,11 +15,13 @@ public class LevelManager : Singleton<LevelManager>
 
     public List<Color> collectableColors;
     [SerializeField] private GameData gameData;
-    public LayerMask goldenLayer, playerLayer, aiLayer, defaultLayer;
+    public LayerMask goldenLayer, defaultLayer;
     
     public GameData getData => gameData;
     [NonSerialized] public LevelAssetCreate levelAsset;
-    public Actor playerActor, aiActor;
+    [SerializeField] private List<Actor> actorsInScene;
+
+    public List<Actor> getActorsInScene => actorsInScene;
 
     private void Awake()
     {
@@ -35,6 +38,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         levelAsset = Resources.Load<LevelAssetCreate>("Scriptables/LevelAsset");
         collectableColors = levelAsset.collectableColors;
+        actorsInScene = FindObjectsOfType<Actor>().ToList();
         //LoadData();
         CreateLevel();
     }
@@ -56,7 +60,17 @@ public class LevelManager : Singleton<LevelManager>
     private void FinishLevel()
     {
         DOTween.KillAll();
-        if (playerActor.getScore >= aiActor.getScore)
+
+        bool playerWins = true;
+        for (int i = 1; i < actorsInScene.Count; i++)
+        {
+            if (actorsInScene[0].getScore <= actorsInScene[i].getScore)
+            {
+                playerWins = false;
+            }
+        }
+        
+        if (playerWins)
         {
             LevelVictory();
         }
@@ -69,14 +83,14 @@ public class LevelManager : Singleton<LevelManager>
     private void LevelVictory()
     {
         gamestate = GameState.Victory;
-        EventManager.Instance.levelWinEvent.Invoke();
+        EventManager.Instance.levelWinEvent.Invoke(actorsInScene);
         RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.VictoryPanel);
     }
 
     private void LevelFail()
     {
         gamestate = GameState.Fail;
-        EventManager.Instance.levelFailEvent.Invoke();
+        EventManager.Instance.levelFailEvent.Invoke(actorsInScene);
         RootController.Instance.SwitchToController(RootController.ControllerTypeEnum.FailPanel);
     }
 

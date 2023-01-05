@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class PlayerController : Actor
@@ -57,6 +58,11 @@ public class PlayerController : Actor
         transform.localScale = Vector3.one * levelData.playerScale;
         holderModel.gameObject.transform.localScale = transform.localScale;
         holderTrigger.gameObject.transform.localScale = transform.localScale;
+    }
+    
+    public override UnityEvent GetCollectEvent()
+    {
+        return EventManager.Instance.playerCollectedEvent;
     }
     
     public override void KillActor()
